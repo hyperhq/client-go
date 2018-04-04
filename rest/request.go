@@ -26,11 +26,14 @@ import (
 	"mime"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/hyperhq/hyper-api/signature"
 
 	"github.com/golang/glog"
 	"golang.org/x/net/http2"
@@ -502,6 +505,13 @@ func (r *Request) Watch() (watch.Interface, error) {
 		req = req.WithContext(r.ctx)
 	}
 	req.Header = r.headers
+
+	//patch for hyper: calculate sign4 for apirouter
+	signature.Sign4(os.Getenv("HYPER_ACCESS_KEY"), os.Getenv("HYPER_SECRET_KEY"), req, os.Getenv("HYPER_REGION"))
+	if glog.V(8) {
+		GenerateCURL(req)
+	}
+
 	client := r.client
 	if client == nil {
 		client = http.DefaultClient
@@ -574,6 +584,13 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 		req = req.WithContext(r.ctx)
 	}
 	req.Header = r.headers
+
+	//patch for hyper: calculate sign4 for apirouter
+	signature.Sign4(os.Getenv("HYPER_ACCESS_KEY"), os.Getenv("HYPER_SECRET_KEY"), req, os.Getenv("HYPER_REGION"))
+	if glog.V(8) {
+		GenerateCURL(req)
+	}
+
 	client := r.client
 	if client == nil {
 		client = http.DefaultClient
@@ -653,6 +670,12 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 		}
 		req.Header = r.headers
 
+		//patch for hyper: calculate sign4 for apirouter
+		signature.Sign4(os.Getenv("HYPER_ACCESS_KEY"), os.Getenv("HYPER_SECRET_KEY"), req, os.Getenv("HYPER_REGION"))
+		if glog.V(8) {
+			GenerateCURL(req)
+		}
+
 		r.backoffMgr.Sleep(r.backoffMgr.CalculateBackoff(r.URL()))
 		if retries > 0 {
 			// We are retrying the request that we already send to apiserver
@@ -660,6 +683,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 			// This request should also be throttled with the client-internal throttler.
 			r.tryThrottle()
 		}
+
 		resp, err := client.Do(req)
 		updateURLMetrics(r, resp, err)
 		if err != nil {
@@ -718,6 +742,37 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 			return nil
 		}
 	}
+}
+
+func readAndAssignRequestBody(req *http.Request) (string, error) {
+	buf := ""
+	if req.Body != nil {
+		buf, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			return "", err
+		}
+		req.Body = ioutil.NopCloser(bytes.NewReader(buf))
+	}
+	return string(buf), nil
+}
+func GenerateCURL(req *http.Request) {
+	body, err := readAndAssignRequestBody(req)
+	if err != nil {
+		glog.Warningf("failed to read request body, error:%v", err)
+	}
+	var curlStr []string
+	curlStr = append(curlStr, fmt.Sprint("[REQUEST]: \ncurl -v -k "))
+	curlStr = append(curlStr, fmt.Sprintf("  -X %v ", req.Method))
+	for k, v := range req.Header {
+		curlStr = append(curlStr, fmt.Sprintf("  -H \"%v: %v\" ", k, v[0]))
+	}
+	if body != "" {
+		curlStr = append(curlStr, fmt.Sprintf("  -d '%v' ", body))
+	}
+	curlStr = append(curlStr, fmt.Sprintf("  %v://%v%v", req.URL.Scheme, req.URL.Host, req.URL.RequestURI()))
+
+	glog.Infof("========================================\n%s\n----------------------------------------\n",
+		strings.Join(curlStr, "\\\n"))
 }
 
 // Do formats and executes the request. Returns a Result object for easy response

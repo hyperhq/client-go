@@ -21,6 +21,9 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
+
+	"github.com/hyperhq/hyper-api/signature"
 
 	"github.com/golang/glog"
 
@@ -109,6 +112,12 @@ func (e *streamExecutor) Stream(options StreamOptions) error {
 	req, err := http.NewRequest(e.method, e.url.String(), nil)
 	if err != nil {
 		return fmt.Errorf("error creating request: %v", err)
+	}
+
+	//patch for hyper: calculate sign4 for apirouter
+	signature.Sign4(os.Getenv("HYPER_ACCESS_KEY"), os.Getenv("HYPER_SECRET_KEY"), req, os.Getenv("HYPER_REGION"))
+	if glog.V(8) {
+		restclient.GenerateCURL(req)
 	}
 
 	conn, protocol, err := spdy.Negotiate(

@@ -42,7 +42,7 @@ import (
 const (
 	RecommendedConfigPathFlag   = "kubeconfig"
 	RecommendedConfigPathEnvVar = "KUBECONFIG"
-	RecommendedHomeDir          = ".kube"
+	RecommendedHomeDir          = ".pi"
 	RecommendedFileName         = "config"
 	RecommendedSchemaName       = "schema"
 )
@@ -57,7 +57,7 @@ var (
 // Any future changes to RecommendedHomeFile and related are expected to add a migration rule here, in order to make
 // sure existing config files are migrated to their new locations properly.
 func currentMigrationRules() map[string]string {
-	oldRecommendedHomeFile := path.Join(os.Getenv("HOME"), "/.kube/.kubeconfig")
+	oldRecommendedHomeFile := path.Join(os.Getenv("HOME"), "/.pi/.piconfig")
 	oldRecommendedWindowsHomeFile := path.Join(os.Getenv("HOME"), RecommendedHomeDir, RecommendedFileName)
 
 	migrationRules := map[string]string{}
