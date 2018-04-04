@@ -11,7 +11,7 @@ go_library(
         "fake_replicaset.go",
         "fake_statefulset.go",
     ],
-    importpath = "k8s.io/client-go/kubernetes/typed/apps/v1/fake",
+    importpath = "github.com/hyperhq/client-go/kubernetes/typed/apps/v1/fake",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/apps/v1:go_default_library",

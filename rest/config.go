@@ -33,10 +33,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/pkg/version"
-	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
-	certutil "k8s.io/client-go/util/cert"
-	"k8s.io/client-go/util/flowcontrol"
+	"github.com/hyperhq/client-go/pkg/version"
+	clientcmdapi "github.com/hyperhq/client-go/tools/clientcmd/api"
+	certutil "github.com/hyperhq/client-go/util/cert"
+	"github.com/hyperhq/client-go/util/flowcontrol"
 )
 
 const (

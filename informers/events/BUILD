@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["interface.go"],
-    importpath = "k8s.io/client-go/informers/events",
+    importpath = "github.com/hyperhq/client-go/informers/events",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/client-go/informers/events/v1beta1:go_default_library",

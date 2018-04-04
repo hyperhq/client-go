@@ -19,8 +19,8 @@ package v1
 import (
 	v1 "k8s.io/api/autoscaling/v1"
 	serializer "k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/kubernetes/scheme"
-	rest "k8s.io/client-go/rest"
+	"github.com/hyperhq/client-go/kubernetes/scheme"
+	rest "github.com/hyperhq/client-go/rest"
 )
 
 type AutoscalingV1Interface interface {

@@ -19,7 +19,7 @@ go_library(
         "fake_scale.go",
         "fake_scale_expansion.go",
     ],
-    importpath = "k8s.io/client-go/kubernetes/typed/extensions/v1beta1/fake",
+    importpath = "github.com/hyperhq/client-go/kubernetes/typed/extensions/v1beta1/fake",
     deps = [
         "//vendor/k8s.io/api/extensions/v1beta1:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:go_default_library",

@@ -12,7 +12,7 @@ go_library(
         "fake_batch_client.go",
         "fake_job.go",
     ],
-    importpath = "k8s.io/client-go/kubernetes/typed/batch/v1/fake",
+    importpath = "github.com/hyperhq/client-go/kubernetes/typed/batch/v1/fake",
     deps = [
         "//vendor/k8s.io/api/batch/v1:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/apis/meta/v1:go_default_library",

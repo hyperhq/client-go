@@ -36,9 +36,9 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/watch"
-	certificatesclient "k8s.io/client-go/kubernetes/typed/certificates/v1beta1"
-	"k8s.io/client-go/tools/cache"
-	certutil "k8s.io/client-go/util/cert"
+	certificatesclient "github.com/hyperhq/client-go/kubernetes/typed/certificates/v1beta1"
+	"github.com/hyperhq/client-go/tools/cache"
+	certutil "github.com/hyperhq/client-go/util/cert"
 )
 
 // RequestNodeCertificate will create a certificate signing request for a node

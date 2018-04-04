@@ -9,7 +9,7 @@ load(
 go_library(
     name = "go_default_library",
     srcs = ["pager.go"],
-    importpath = "k8s.io/client-go/tools/pager",
+    importpath = "github.com/hyperhq/client-go/tools/pager",
     deps = [
         "//vendor/golang.org/x/net/context:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/api/errors:go_default_library",
@@ -37,7 +37,7 @@ filegroup(
 go_test(
     name = "go_default_test",
     srcs = ["pager_test.go"],
-    importpath = "k8s.io/client-go/tools/pager",
+    importpath = "github.com/hyperhq/client-go/tools/pager",
     library = ":go_default_library",
     deps = [
         "//vendor/golang.org/x/net/context:go_default_library",

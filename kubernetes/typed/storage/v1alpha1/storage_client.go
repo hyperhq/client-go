@@ -19,8 +19,8 @@ package v1alpha1
 import (
 	v1alpha1 "k8s.io/api/storage/v1alpha1"
 	serializer "k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/kubernetes/scheme"
-	rest "k8s.io/client-go/rest"
+	"github.com/hyperhq/client-go/kubernetes/scheme"
+	rest "github.com/hyperhq/client-go/rest"
 )
 
 type StorageV1alpha1Interface interface {

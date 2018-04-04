@@ -35,9 +35,9 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/watch"
-	"k8s.io/client-go/kubernetes/scheme"
-	restclient "k8s.io/client-go/rest"
-	"k8s.io/client-go/util/flowcontrol"
+	"github.com/hyperhq/client-go/kubernetes/scheme"
+	restclient "github.com/hyperhq/client-go/rest"
+	"github.com/hyperhq/client-go/util/flowcontrol"
 )
 
 // Interface is a Kubernetes client that allows you to access metadata

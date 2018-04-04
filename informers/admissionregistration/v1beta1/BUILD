@@ -7,7 +7,7 @@ go_library(
         "mutatingwebhookconfiguration.go",
         "validatingwebhookconfiguration.go",
     ],
-    importpath = "k8s.io/client-go/informers/admissionregistration/v1beta1",
+    importpath = "github.com/hyperhq/client-go/informers/admissionregistration/v1beta1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/admissionregistration/v1beta1:go_default_library",

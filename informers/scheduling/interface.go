@@ -19,8 +19,8 @@ limitations under the License.
 package scheduling
 
 import (
-	internalinterfaces "k8s.io/client-go/informers/internalinterfaces"
-	v1alpha1 "k8s.io/client-go/informers/scheduling/v1alpha1"
+	internalinterfaces "github.com/hyperhq/client-go/informers/internalinterfaces"
+	v1alpha1 "github.com/hyperhq/client-go/informers/scheduling/v1alpha1"
 )
 
 // Interface provides access to each of this group's versions.

@@ -31,7 +31,7 @@ import (
 	"github.com/golang/glog"
 	"golang.org/x/oauth2"
 	"k8s.io/apimachinery/pkg/util/net"
-	restclient "k8s.io/client-go/rest"
+	restclient "github.com/hyperhq/client-go/rest"
 )
 
 const (

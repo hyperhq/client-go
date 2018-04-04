@@ -12,7 +12,7 @@ go_library(
         "doc.go",
         "register.go",
     ],
-    importpath = "k8s.io/client-go/kubernetes/fake",
+    importpath = "github.com/hyperhq/client-go/kubernetes/fake",
     deps = [
         "//vendor/k8s.io/api/admissionregistration/v1alpha1:go_default_library",
         "//vendor/k8s.io/api/admissionregistration/v1beta1:go_default_library",

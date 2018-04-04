@@ -11,7 +11,7 @@ go_library(
         "exec.go",
         "funcs.go",
     ],
-    importpath = "k8s.io/client-go/third_party/forked/golang/template",
+    importpath = "github.com/hyperhq/client-go/third_party/forked/golang/template",
 )
 
 filegroup(

@@ -6,7 +6,7 @@ go_library(
         "event.go",
         "interface.go",
     ],
-    importpath = "k8s.io/client-go/informers/events/v1beta1",
+    importpath = "github.com/hyperhq/client-go/informers/events/v1beta1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/events/v1beta1:go_default_library",

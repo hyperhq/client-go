@@ -8,7 +8,7 @@ load(
 go_library(
     name = "go_default_library",
     srcs = ["metrics.go"],
-    importpath = "k8s.io/client-go/tools/metrics",
+    importpath = "github.com/hyperhq/client-go/tools/metrics",
 )
 
 filegroup(

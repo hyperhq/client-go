@@ -8,7 +8,7 @@ go_library(
         "register.go",
         "zz_generated.conversion.go",
     ],
-    importpath = "k8s.io/client-go/scale/scheme/extensionsv1beta1",
+    importpath = "github.com/hyperhq/client-go/scale/scheme/extensionsv1beta1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/extensions/v1beta1:go_default_library",

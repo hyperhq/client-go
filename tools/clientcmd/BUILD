@@ -15,7 +15,7 @@ go_test(
         "overrides_test.go",
         "validation_test.go",
     ],
-    importpath = "k8s.io/client-go/tools/clientcmd",
+    importpath = "github.com/hyperhq/client-go/tools/clientcmd",
     library = ":go_default_library",
     deps = [
         "//vendor/github.com/ghodss/yaml:go_default_library",
@@ -43,7 +43,7 @@ go_library(
         "overrides.go",
         "validation.go",
     ],
-    importpath = "k8s.io/client-go/tools/clientcmd",
+    importpath = "github.com/hyperhq/client-go/tools/clientcmd",
     deps = [
         "//vendor/github.com/golang/glog:go_default_library",
         "//vendor/github.com/howeyc/gopass:go_default_library",

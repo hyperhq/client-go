@@ -23,14 +23,14 @@ import (
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/discovery"
-	scalescheme "k8s.io/client-go/scale/scheme"
-	scaleappsint "k8s.io/client-go/scale/scheme/appsint"
-	scaleappsv1beta1 "k8s.io/client-go/scale/scheme/appsv1beta1"
-	scaleappsv1beta2 "k8s.io/client-go/scale/scheme/appsv1beta2"
-	scaleautoscaling "k8s.io/client-go/scale/scheme/autoscalingv1"
-	scaleextint "k8s.io/client-go/scale/scheme/extensionsint"
-	scaleext "k8s.io/client-go/scale/scheme/extensionsv1beta1"
+	"github.com/hyperhq/client-go/discovery"
+	scalescheme "github.com/hyperhq/client-go/scale/scheme"
+	scaleappsint "github.com/hyperhq/client-go/scale/scheme/appsint"
+	scaleappsv1beta1 "github.com/hyperhq/client-go/scale/scheme/appsv1beta1"
+	scaleappsv1beta2 "github.com/hyperhq/client-go/scale/scheme/appsv1beta2"
+	scaleautoscaling "github.com/hyperhq/client-go/scale/scheme/autoscalingv1"
+	scaleextint "github.com/hyperhq/client-go/scale/scheme/extensionsint"
+	scaleext "github.com/hyperhq/client-go/scale/scheme/extensionsv1beta1"
 )
 
 // ScaleKindResolver knows about the relationship between

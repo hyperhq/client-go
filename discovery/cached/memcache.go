@@ -26,8 +26,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/version"
-	"k8s.io/client-go/discovery"
-	restclient "k8s.io/client-go/rest"
+	"github.com/hyperhq/client-go/discovery"
+	restclient "github.com/hyperhq/client-go/rest"
 )
 
 // memCacheClient can Invalidate() to stay up-to-date with discovery

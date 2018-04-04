@@ -25,7 +25,7 @@ import (
 	"k8s.io/apimachinery/pkg/util/clock"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apimachinery/pkg/util/wait"
-	"k8s.io/client-go/util/buffer"
+	"github.com/hyperhq/client-go/util/buffer"
 
 	"github.com/golang/glog"
 )

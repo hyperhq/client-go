@@ -19,8 +19,8 @@ package v1beta1
 import (
 	v1beta1 "k8s.io/api/authentication/v1beta1"
 	serializer "k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/kubernetes/scheme"
-	rest "k8s.io/client-go/rest"
+	"github.com/hyperhq/client-go/kubernetes/scheme"
+	rest "github.com/hyperhq/client-go/rest"
 )
 
 type AuthenticationV1beta1Interface interface {

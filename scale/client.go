@@ -23,8 +23,8 @@ import (
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	serializer "k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/dynamic"
-	restclient "k8s.io/client-go/rest"
+	"github.com/hyperhq/client-go/dynamic"
+	restclient "github.com/hyperhq/client-go/rest"
 )
 
 var scaleConverter = NewScaleConverter()

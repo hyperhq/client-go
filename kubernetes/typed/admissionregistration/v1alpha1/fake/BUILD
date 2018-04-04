@@ -7,7 +7,7 @@ go_library(
         "fake_admissionregistration_client.go",
         "fake_initializerconfiguration.go",
     ],
-    importpath = "k8s.io/client-go/kubernetes/typed/admissionregistration/v1alpha1/fake",
+    importpath = "github.com/hyperhq/client-go/kubernetes/typed/admissionregistration/v1alpha1/fake",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/admissionregistration/v1alpha1:go_default_library",

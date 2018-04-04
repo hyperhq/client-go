@@ -21,8 +21,8 @@ package internalinterfaces
 import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
-	kubernetes "k8s.io/client-go/kubernetes"
-	cache "k8s.io/client-go/tools/cache"
+	kubernetes "github.com/hyperhq/client-go/kubernetes"
+	cache "github.com/hyperhq/client-go/tools/cache"
 	time "time"
 )
 

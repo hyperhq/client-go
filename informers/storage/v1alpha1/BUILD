@@ -6,7 +6,7 @@ go_library(
         "interface.go",
         "volumeattachment.go",
     ],
-    importpath = "k8s.io/client-go/informers/storage/v1alpha1",
+    importpath = "github.com/hyperhq/client-go/informers/storage/v1alpha1",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/storage/v1alpha1:go_default_library",

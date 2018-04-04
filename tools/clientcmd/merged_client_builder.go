@@ -23,8 +23,8 @@ import (
 	"github.com/golang/glog"
 
 	"k8s.io/api/core/v1"
-	restclient "k8s.io/client-go/rest"
-	clientcmdapi "k8s.io/client-go/tools/clientcmd/api"
+	restclient "github.com/hyperhq/client-go/rest"
+	clientcmdapi "github.com/hyperhq/client-go/tools/clientcmd/api"
 )
 
 // DeferredLoadingClientConfig is a ClientConfig interface that is backed by a client config loader.

@@ -12,7 +12,7 @@ go_library(
         "doc.go",
         "import.go",
     ],
-    importpath = "k8s.io/client-go/kubernetes",
+    importpath = "github.com/hyperhq/client-go/kubernetes",
     deps = [
         "//vendor/github.com/golang/glog:go_default_library",
         "//vendor/k8s.io/client-go/discovery:go_default_library",

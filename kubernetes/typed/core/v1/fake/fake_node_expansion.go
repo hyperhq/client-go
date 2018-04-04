@@ -18,7 +18,7 @@ package fake
 
 import (
 	"k8s.io/api/core/v1"
-	core "k8s.io/client-go/testing"
+	core "github.com/hyperhq/client-go/testing"
 )
 
 func (c *FakeNodes) PatchStatus(nodeName string, data []byte) (*v1.Node, error) {

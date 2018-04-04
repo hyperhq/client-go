@@ -8,7 +8,7 @@ go_library(
         "interfaces.go",
         "util.go",
     ],
-    importpath = "k8s.io/client-go/scale",
+    importpath = "github.com/hyperhq/client-go/scale",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/autoscaling/v1:go_default_library",
@@ -35,7 +35,7 @@ go_test(
         "client_test.go",
         "roundtrip_test.go",
     ],
-    importpath = "k8s.io/client-go/scale",
+    importpath = "github.com/hyperhq/client-go/scale",
     library = ":go_default_library",
     deps = [
         "//vendor/github.com/stretchr/testify/assert:go_default_library",

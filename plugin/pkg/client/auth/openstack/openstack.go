@@ -26,7 +26,7 @@ import (
 	"github.com/gophercloud/gophercloud/openstack"
 
 	"k8s.io/apimachinery/pkg/util/net"
-	restclient "k8s.io/client-go/rest"
+	restclient "github.com/hyperhq/client-go/rest"
 )
 
 func init() {

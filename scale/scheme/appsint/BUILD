@@ -6,7 +6,7 @@ go_library(
         "doc.go",
         "register.go",
     ],
-    importpath = "k8s.io/client-go/scale/scheme/appsint",
+    importpath = "github.com/hyperhq/client-go/scale/scheme/appsint",
     visibility = ["//visibility:public"],
     deps = [
         "//vendor/k8s.io/api/apps/v1beta2:go_default_library",
