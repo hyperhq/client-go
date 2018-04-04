@@ -24,16 +24,17 @@ import (
 	"os"
 	"strings"
 
-	"github.com/golang/glog"
-	"github.com/imdario/mergo"
-
-	"k8s.io/api/core/v1"
 	restclient "github.com/hyperhq/client-go/rest"
 	clientauth "github.com/hyperhq/client-go/tools/auth"
 	clientcmdapi "github.com/hyperhq/client-go/tools/clientcmd/api"
+
+	"github.com/golang/glog"
+	"github.com/imdario/mergo"
+	"k8s.io/api/core/v1"
 )
 
 var (
+	DefaultRegion = "gcp-us-central1"
 	// ClusterDefaults has the same behavior as the old EnvVar and DefaultCluster fields
 	// DEPRECATED will be replaced
 	ClusterDefaults = clientcmdapi.Cluster{Server: getDefaultServer()}
@@ -242,6 +243,19 @@ func (config *DirectClientConfig) getUserIdentificationPartialConfig(configAuthI
 		mergedConfig.AuthConfigPersister = persistAuthConfig
 	}
 
+	//patch for hyper: get credential from config file
+	mergedConfig.TLSClientConfig.Insecure = true
+	if len(configAuthInfo.AccessKey) > 0 || len(configAuthInfo.SecretKey) > 0 {
+		if configAuthInfo.Region == "" {
+			configAuthInfo.Region = DefaultRegion
+		}
+		mergedConfig.CredentialConfig = restclient.CredentialConfig{
+			Region:    configAuthInfo.Region,
+			AccessKey: configAuthInfo.AccessKey,
+			SecretKey: configAuthInfo.SecretKey,
+		}
+	}
+
 	// if there still isn't enough information to authenticate the user, try prompting
 	if !canIdentifyUser(*mergedConfig) && (fallbackReader != nil) {
 		if len(config.promptedCredentials.username) > 0 && len(config.promptedCredentials.password) > 0 {
@@ -274,6 +288,13 @@ func makeUserIdentificationConfig(info clientauth.Info) *restclient.Config {
 	config.CertFile = info.CertFile
 	config.KeyFile = info.KeyFile
 	config.BearerToken = info.BearerToken
+
+	//for hyper
+	config.CredentialConfig = restclient.CredentialConfig{
+		Region:    info.Region,
+		AccessKey: info.AccessKey,
+		SecretKey: info.SecretKey,
+	}
 	return config
 }
 
@@ -291,7 +312,8 @@ func canIdentifyUser(config restclient.Config) bool {
 	return len(config.Username) > 0 ||
 		(len(config.CertFile) > 0 || len(config.CertData) > 0) ||
 		len(config.BearerToken) > 0 ||
-		config.AuthProvider != nil
+		config.AuthProvider != nil ||
+		(len(config.AccessKey) > 0 || len(config.SecretKey) > 0)
 }
 
 // Namespace implements ClientConfig

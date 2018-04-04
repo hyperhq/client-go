@@ -156,6 +156,11 @@ const (
 	FlagUsername         = "username"
 	FlagPassword         = "password"
 	FlagTimeout          = "request-timeout"
+
+	//extend for hyper
+	FlagRegion    = "region"
+	FlagAccessKey = "access-key"
+	FlagSecretKey = "secret-key"
 )
 
 // RecommendedConfigOverrideFlags is a convenience method to return recommended flag names prefixed with a string of your choosing
