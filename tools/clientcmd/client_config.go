@@ -441,12 +441,16 @@ func (config *DirectClientConfig) getAuthInfo() (clientcmdapi.AuthInfo, error) {
 	authInfoName, required := config.getAuthInfoName()
 
 	mergedAuthInfo := clientcmdapi.NewAuthInfo()
+
+	//--region, --access-key, --secret-key
+	mergo.Merge(mergedAuthInfo, config.overrides.AuthInfo)
+
+	//config file
 	if configAuthInfo, exists := authInfos[authInfoName]; exists {
 		mergo.Merge(mergedAuthInfo, configAuthInfo)
 	} else if required {
 		return clientcmdapi.AuthInfo{}, fmt.Errorf("auth info %q does not exist", authInfoName)
 	}
-	mergo.Merge(mergedAuthInfo, config.overrides.AuthInfo)
 
 	return *mergedAuthInfo, nil
 }
@@ -457,12 +461,8 @@ func (config *DirectClientConfig) getCluster() (clientcmdapi.Cluster, error) {
 	clusterInfoName, required := config.getClusterName()
 
 	mergedClusterInfo := clientcmdapi.NewCluster()
-	mergo.Merge(mergedClusterInfo, config.overrides.ClusterDefaults)
-	if configClusterInfo, exists := clusterInfos[clusterInfoName]; exists {
-		mergo.Merge(mergedClusterInfo, configClusterInfo)
-	} else if required {
-		return clientcmdapi.Cluster{}, fmt.Errorf("cluster %q does not exist", clusterInfoName)
-	}
+
+	//--server
 	mergo.Merge(mergedClusterInfo, config.overrides.ClusterInfo)
 	// An override of --insecure-skip-tls-verify=true and no accompanying CA/CA data should clear already-set CA/CA data
 	// otherwise, a kubeconfig containing a CA reference would return an error that "CA and insecure-skip-tls-verify couldn't both be set"
@@ -471,6 +471,15 @@ func (config *DirectClientConfig) getCluster() (clientcmdapi.Cluster, error) {
 	if config.overrides.ClusterInfo.InsecureSkipTLSVerify && caLen == 0 && caDataLen == 0 {
 		mergedClusterInfo.CertificateAuthority = ""
 		mergedClusterInfo.CertificateAuthorityData = nil
+	}
+
+	mergo.Merge(mergedClusterInfo, config.overrides.ClusterDefaults)
+
+	//config file
+	if configClusterInfo, exists := clusterInfos[clusterInfoName]; exists {
+		mergo.Merge(mergedClusterInfo, configClusterInfo)
+	} else if required {
+		return clientcmdapi.Cluster{}, fmt.Errorf("cluster %q does not exist", clusterInfoName)
 	}
 
 	return *mergedClusterInfo, nil
