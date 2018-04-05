@@ -44,6 +44,10 @@ const (
 	DefaultBurst int     = 10
 )
 
+var (
+	DefaultDomain = "*.hyper.sh"
+)
+
 // Config holds the common attributes that can be passed to a Kubernetes client on
 // initialization.
 type Config struct {

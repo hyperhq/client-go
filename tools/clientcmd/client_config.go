@@ -34,7 +34,11 @@ import (
 )
 
 var (
-	DefaultRegion = "gcp-us-central1"
+	DefaultServer  = "https://*.hyper.sh:6443"
+	DefaultCluster = "default"
+	DefaultContext = "default"
+	DefaultRegion  = "gcp-us-central1"
+
 	// ClusterDefaults has the same behavior as the old EnvVar and DefaultCluster fields
 	// DEPRECATED will be replaced
 	ClusterDefaults = clientcmdapi.Cluster{Server: getDefaultServer()}
@@ -48,10 +52,11 @@ var (
 // getDefaultServer returns a default setting for DefaultClientConfig
 // DEPRECATED
 func getDefaultServer() string {
-	if server := os.Getenv("KUBERNETES_MASTER"); len(server) > 0 {
+	if server := os.Getenv("HYPER_HOST"); len(server) > 0 {
 		return server
 	}
-	return "http://localhost:8080"
+	//return "http://localhost:8080"
+	return ""
 }
 
 // ClientConfig is used to make it easy to get an api server client
@@ -313,7 +318,7 @@ func canIdentifyUser(config restclient.Config) bool {
 		(len(config.CertFile) > 0 || len(config.CertData) > 0) ||
 		len(config.BearerToken) > 0 ||
 		config.AuthProvider != nil ||
-		(len(config.AccessKey) > 0 || len(config.SecretKey) > 0)
+		(len(config.CredentialConfig.AccessKey) > 0 || len(config.CredentialConfig.SecretKey) > 0)
 }
 
 // Namespace implements ClientConfig
@@ -427,7 +432,6 @@ func (config *DirectClientConfig) getContext() (clientcmdapi.Context, error) {
 		return clientcmdapi.Context{}, fmt.Errorf("context %q does not exist", contextName)
 	}
 	mergo.Merge(mergedContext, config.overrides.Context)
-
 	return *mergedContext, nil
 }
 

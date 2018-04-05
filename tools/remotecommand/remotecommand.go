@@ -119,7 +119,7 @@ func (e *streamExecutor) Stream(options StreamOptions) error {
 
 	//patch for hyper: calculate sign4 for apirouter
 	signature.Sign4(e.accessKey, e.secretKey, req, e.region)
-	if glog.V(8) {
+	if glog.V(7) {
 		restclient.GenerateCURL(req)
 	}
 

@@ -125,6 +125,10 @@ func NewRequest(client HTTPClient, verb string, baseURL *url.URL, versionedAPIPa
 	if baseURL != nil {
 		pathPrefix = path.Join(pathPrefix, baseURL.Path)
 	}
+	if strings.Contains(baseURL.Host, DefaultDomain) {
+		baseURL.Host = strings.Replace(baseURL.Host, "*", credential.Region, 1)
+		glog.V(4).Infof("replace default domain to %v", baseURL.Host)
+	}
 	r := &Request{
 		client:      client,
 		verb:        verb,
@@ -510,7 +514,7 @@ func (r *Request) Watch() (watch.Interface, error) {
 
 	//patch for hyper: calculate sign4 for apirouter
 	signature.Sign4(r.credential.AccessKey, r.credential.SecretKey, req, r.credential.Region)
-	if glog.V(8) {
+	if glog.V(7) {
 		GenerateCURL(req)
 	}
 
@@ -589,7 +593,7 @@ func (r *Request) Stream() (io.ReadCloser, error) {
 
 	//patch for hyper: calculate sign4 for apirouter
 	signature.Sign4(r.credential.AccessKey, r.credential.SecretKey, req, r.credential.Region)
-	if glog.V(8) {
+	if glog.V(7) {
 		GenerateCURL(req)
 	}
 
@@ -674,7 +678,7 @@ func (r *Request) request(fn func(*http.Request, *http.Response)) error {
 
 		//patch for hyper: calculate sign4 for apirouter
 		signature.Sign4(r.credential.AccessKey, r.credential.SecretKey, req, r.credential.Region)
-		if glog.V(8) {
+		if glog.V(7) {
 			GenerateCURL(req)
 		}
 
