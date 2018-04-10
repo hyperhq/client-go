@@ -19,7 +19,7 @@ func NewFipCli(client *HyperConn) *FipCli {
 	}
 }
 
-func (f *FipCli) AllocateFip(protocols []string, count int) (int, []FipListResponse, error) {
+func (f *FipCli) AllocateFip(protocols []string, count int) (int, []FipResponse, error) {
 	var (
 		result     string
 		httpStatus int
@@ -38,14 +38,14 @@ func (f *FipCli) AllocateFip(protocols []string, count int) (int, []FipListRespo
 	} else if httpStatus != http.StatusCreated {
 		log.Fatalf("response error: %v - %v", httpStatus, result)
 	}
-	var fipListAllocated []FipListResponse
+	var fipListAllocated []FipResponse
 	if err = json.Unmarshal([]byte(result), &fipListAllocated); err != nil {
 		log.Fatalf("failed to parse allocated fip list")
 	}
 	return httpStatus, fipListAllocated, nil
 }
 
-func (f *FipCli) ListFips() (int, []FipListResponse, error) {
+func (f *FipCli) ListFips() (int, []FipResponse, error) {
 	method := "GET"
 	endpoint := "/api/v1/hyper/fips"
 
@@ -55,12 +55,12 @@ func (f *FipCli) ListFips() (int, []FipListResponse, error) {
 	} else if httpStatus != http.StatusOK {
 		log.Fatalf("response error: %v - %v", httpStatus, result)
 	}
-	var fipList []FipListResponse
+	var fipList []FipResponse
 	json.Unmarshal([]byte(result), &fipList)
 	return httpStatus, fipList, nil
 }
 
-func (f *FipCli) GetFip(ip string) (int, *FipGetResponse, error) {
+func (f *FipCli) GetFip(ip string) (int, *FipResponse, error) {
 	if ip == "" {
 		log.Fatal("Please specify ip")
 	}
@@ -74,7 +74,7 @@ func (f *FipCli) GetFip(ip string) (int, *FipGetResponse, error) {
 	} else if httpStatus != http.StatusOK {
 		log.Fatalf("response error: %v - %v", httpStatus, result)
 	}
-	var fip FipGetResponse
+	var fip FipResponse
 	err = json.Unmarshal([]byte(result), &fip)
 	if err != nil {
 		log.Fatalf("failed to convert result to fip:%v", err)
@@ -129,7 +129,7 @@ func (f *FipCli) ReleaseAllFips() {
 		log.Fatalf("response error: %v - %v", httpStatus, result)
 	}
 
-	var fipList []FipListResponse
+	var fipList []FipResponse
 	err = json.Unmarshal([]byte(result), &fipList)
 	if err != nil {
 		log.Fatalf("failed to parse fip list:%v", err)
