@@ -19,7 +19,7 @@ func NewFipCli(client *HyperConn) *FipCli {
 	}
 }
 
-func (f *FipCli) AllocateFip(protocols []string, count int) (int, []FipResponse, error) {
+func (f *FipCli) AllocateFip(count int) (int, []FipResponse, error) {
 	var (
 		result     string
 		httpStatus int
@@ -27,12 +27,7 @@ func (f *FipCli) AllocateFip(protocols []string, count int) (int, []FipResponse,
 	)
 	method := "POST"
 	endpoint := fmt.Sprintf("/api/v1/hyper/fips?count=%v", count)
-	if len(protocols) == 0 {
-		result, httpStatus, err = f.hyperCli.SockRequest(method, endpoint, nil, "")
-	} else {
-		data := fmt.Sprintf(`{"protocols":"%v"}`, strings.Join(protocols, ","))
-		result, httpStatus, err = f.hyperCli.SockRequest(method, endpoint, strings.NewReader(data), "application/json")
-	}
+	result, httpStatus, err = f.hyperCli.SockRequest(method, endpoint, nil, "")
 	if err != nil {
 		log.Fatalf("send request error: %v", err)
 	} else if httpStatus != http.StatusCreated {
