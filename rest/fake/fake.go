@@ -21,12 +21,13 @@ package fake
 import (
 	"net/http"
 	"net/url"
+	"os"
 
+	restclient "github.com/hyperhq/client-go/rest"
+	"github.com/hyperhq/client-go/util/flowcontrol"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
-	restclient "github.com/hyperhq/client-go/rest"
-	"github.com/hyperhq/client-go/util/flowcontrol"
 )
 
 func CreateHTTPClient(roundTripper func(*http.Request) (*http.Response, error)) *http.Client {
@@ -86,6 +87,11 @@ func (c *RESTClient) GetRateLimiter() flowcontrol.RateLimiter {
 }
 
 func (c *RESTClient) request(verb string) *restclient.Request {
+	credentialConfig := restclient.CredentialConfig{
+		Region:    os.Getenv("HYPER_REGION"),
+		AccessKey: os.Getenv("HYPER_ACCESS_KEY"),
+		SecretKey: os.Getenv("HYPER_SECRET_KEY"),
+	}
 	config := restclient.ContentConfig{
 		ContentType:          runtime.ContentTypeJSON,
 		GroupVersion:         &c.GroupVersion,
@@ -107,7 +113,7 @@ func (c *RESTClient) request(verb string) *restclient.Request {
 		serializers.StreamingSerializer = info.StreamSerializer.Serializer
 		serializers.Framer = info.StreamSerializer.Framer
 	}
-	return restclient.NewRequest(c, verb, &url.URL{Host: "localhost"}, c.VersionedAPIPath, config, serializers, nil, nil)
+	return restclient.NewRequest(c, verb, &url.URL{Host: "localhost"}, c.VersionedAPIPath, credentialConfig, config, serializers, nil, nil)
 }
 
 func (c *RESTClient) Do(req *http.Request) (*http.Response, error) {
